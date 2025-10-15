@@ -25,7 +25,14 @@ i18n
                     },
                     outlined: 'Outlined',
                     counter_one: 'Changed language just once',
-                    counter_other: 'Changed language already {{count}} times'
+                    counter_other: 'Changed language already {{count}} times',
+                    step1: 'Select campaign settings',
+                    step2: 'Create an ad group',
+                    step3: 'Create an ad',
+                    next: 'Next',
+                    back: 'Back',
+                    skip: 'Skip',
+                    finish: 'Finish'
                 }
             },
             ar: {
@@ -40,7 +47,14 @@ i18n
                     counter_two: 'تم تغيير اللغة مرتين',
                     counter_few: 'تم تغيير اللغة {{count}} مرات',
                     counter_many: 'تم تغيير اللغة {{count}} مرة',
-                    counter_other: 'تم تغيير اللغة {{count}} مرات'
+                    counter_other: 'تم تغيير اللغة {{count}} مرات',
+                    step1: 'اختر إعدادات حملة ماستر بلاستر',
+                    step2: 'أنشئ مجموعة إعلانات',
+                    step3: 'أنشئ إعلانًا',
+                    next: "التالي",
+                    back: "السابق",
+                    skip: "تخطي",
+                    finish: "إنهاء"
                 }
             }
 

@@ -6,10 +6,11 @@ import { prefixer } from 'stylis';
 import rtlPlugin from 'stylis-plugin-rtl';
 import { useTranslation, Trans } from 'react-i18next';
 import { useState, useEffect } from 'react';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Button from '@mui/material/Button';
 import { arSA } from '@mui/material/locale';
+import TopBar from './components/TopBar';
+import Box from '@mui/material/Box';
+import CssBaseline from '@mui/material/CssBaseline';
+import FormContainer from './components/FormContainer';
 
 const lngs = {
   en: { nativeName: 'English' },
@@ -18,8 +19,7 @@ const lngs = {
 
 
 function App() {
-  const { t, i18n } = useTranslation();
-  const [count, setCounter] = useState(0);
+  const { i18n } = useTranslation();
   const [dir, setDir] = useState('ltr');
 
   const cacheRtl = createCache({
@@ -29,6 +29,16 @@ function App() {
 
   const theme = createTheme({
     direction: i18n.resolvedLanguage === 'ar' ? 'rtl' : 'ltr',
+    palette: {
+      mode: 'light', // 👈 ensures light mode
+      primary: {
+        main: '#1976d2',
+      },
+      background: {
+        default: '#fafafa',
+        paper: '#ffffff',
+      },
+    },
   },
     arSA,
   );
@@ -45,30 +55,9 @@ function App() {
     <div>
       <CacheProvider value={cacheRtl}>
         <ThemeProvider theme={theme}>
-          <AppBar position="fixed" color="default">
-            <Toolbar sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-              {Object.keys(lngs).map((lng) => (
-                <Button
-                  key={lng}
-                  variant={i18n.resolvedLanguage === lng ? 'contained' : 'outlined'}
-                  color="primary"
-                  size="small"
-                  sx={{
-                    mx: 1,
-                    textTransform: 'none',
-                    borderRadius: 3,
-                    fontWeight: i18n.resolvedLanguage === lng ? 'bold' : 'normal',
-                  }}
-                  onClick={() => {
-                    i18n.changeLanguage(lng);
-                    setCounter(count + 1);
-                  }}
-                >
-                  {lngs[lng].nativeName}
-                </Button>
-              ))}
-            </Toolbar>
-          </AppBar>
+          <CssBaseline />
+          <TopBar lngs={lngs} i18n={i18n} />
+          <FormContainer theme={theme} />
         </ThemeProvider>
       </CacheProvider>
     </div>
