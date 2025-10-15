@@ -6,7 +6,13 @@ import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useTranslation } from 'react-i18next';
-import Step1Form from './Step1Form';
+import Step1Form from './Step1Form'; 
+import Step2Form from './Step2Form';
+
+const StepMap = {
+    0: <Step1Form />,
+    1: <Step2Form />
+}
 
 
 const FormContainer = ({ theme }) => {
@@ -53,7 +59,7 @@ const FormContainer = ({ theme }) => {
                 </React.Fragment>
             ) : (
                 <React.Fragment>
-                    {activeStep === 0 ? <Step1Form /> : <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>}
+                    {StepMap[activeStep] ? StepMap[activeStep] : <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>}
                     <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                         <Button
                             color="inherit"
