@@ -8,7 +8,6 @@ import { useTranslation, Trans } from 'react-i18next';
 import { useState, useEffect } from 'react';
 import { arSA } from '@mui/material/locale';
 import TopBar from './components/TopBar';
-import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import FormContainer from './components/FormContainer';
 
