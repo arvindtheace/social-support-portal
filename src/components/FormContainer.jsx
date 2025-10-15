@@ -8,10 +8,12 @@ import Typography from '@mui/material/Typography';
 import { useTranslation } from 'react-i18next';
 import Step1Form from './Step1Form'; 
 import Step2Form from './Step2Form';
+import Step3Form from './Step3Form';
 
 const StepMap = {
     0: <Step1Form />,
-    1: <Step2Form />
+    1: <Step2Form />,
+    2: <Step3Form />
 }
 
 
