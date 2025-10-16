@@ -36,7 +36,7 @@ const FormContainer = ({ theme }) => {
     const StepMap = {
         0: <Step1Form onValidityChange={setIsStep1Valid} onDataChange={setStep1Data} />,
         1: <Step2Form onValidityChange={setIsStep2Valid} onDataChange={setStep2Data} />,
-        2: <Step3Form onValidityChange={setIsStep3Valid} onDataChange={setStep3Data} />
+        2: <Step3Form onValidityChange={setIsStep3Valid} onDataChange={setStep3Data} direction={theme.direction}/>
     }
 
     console.log('isStep1Valid:', isStep1Valid);

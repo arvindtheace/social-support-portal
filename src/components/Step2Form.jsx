@@ -93,7 +93,7 @@ const Step2Form = ({ onValidityChange, onDataChange }) => {
             }}
         >
             <Typography variant="h5" mb={2}>
-                Employment & Financial Details
+                {t("Employment & Financial Details")}
             </Typography>
 
             <Grid container spacing={2}>

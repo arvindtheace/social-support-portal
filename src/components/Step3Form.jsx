@@ -6,9 +6,12 @@ import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useSelector } from "react-redux";
+import { useTranslation } from 'react-i18next';
 
 
-const Step3Form = ({ onValidityChange, onDataChange }) => {
+
+const Step3Form = ({ onValidityChange, onDataChange, direction }) => {
+    const { t } = useTranslation();
     const situationInfo = useSelector((state) => state.situationInfo);
     const [form, setForm] = useState({
         financial: situationInfo.financial || '',
@@ -60,9 +63,28 @@ You are assisting a user filling out a financial aid or loan application.
     but avoid exaggeration or fictional specifics.
     Keep it in first person ("I...") and around 4–6 sentences.
 
+    IMPORTANT:
+    Respond entirely in ${direction === 'rtl' ? 'Arabic' : 'English'}.
+    Maintain a professional and empathetic tone.
+
       Text: "${currentText}"
     `,
-            employment: `
+    employment: `
+    You are assisting a user who is describing their current employment situation as part of their application for financial assistance.
+
+    TASK:
+    Expand and polish the text below into a clear, professional, and sincere paragraph.
+    Highlight the user's current employment status, any financial or job-related challenges, and their motivation to improve their situation.
+    If the input is too short, infer realistic and grounded details while keeping the tone authentic and respectful.
+    Keep it in first person and limit to 4–6 sentences.
+
+    IMPORTANT:
+    Respond entirely in ${direction === 'rtl' ? 'Arabic' : 'English'}.
+    Maintain a professional and empathetic tone.
+
+      Text: "${currentText}"
+    `,
+            reason: `
     You are assisting a user who is writing their reason for applying for financial assistance.
 
     TASK:
@@ -70,6 +92,11 @@ You are assisting a user filling out a financial aid or loan application.
     Emphasize the user's motivation, sincerity, and need for support without being overly emotional.
     If the input is too short, infer natural, realistic reasons while keeping it authentic and grounded.
     Keep it in first person and limit to 4–6 sentences.
+
+    IMPORTANT:
+    Respond entirely in ${direction === 'rtl' ? 'Arabic' : 'English'}.
+    Maintain a professional and empathetic tone.
+
       Text: "${currentText}"
     `,
         };
@@ -112,14 +139,14 @@ You are assisting a user filling out a financial aid or loan application.
             }}
         >
             <Typography variant="h6" mb={2}>
-                Application Details
+                {t('Situation Descriptions')}
             </Typography>
 
             <Stack spacing={3}>
                 {/* Section 1 */}
                 <Box>
                     <Typography variant="subtitle1" mb={1}>
-                        Current Financial Situation
+                        {t('Current Financial Situation')}
                     </Typography>
                     <TextField
                         fullWidth
@@ -137,7 +164,7 @@ You are assisting a user filling out a financial aid or loan application.
                         {loading && activeField === 'financial' ? (
                             <CircularProgress size={20} />
                         ) : (
-                            'Help me to write'
+                            t('Help me to write')
                         )}
                     </Button>
                 </Box>
@@ -145,7 +172,7 @@ You are assisting a user filling out a financial aid or loan application.
                 {/* Section 2 */}
                 <Box>
                     <Typography variant="subtitle1" mb={1}>
-                        Employment Circumstances
+                        {t('Employment Circumstances')}
                     </Typography>
                     <TextField
                         fullWidth
@@ -163,7 +190,7 @@ You are assisting a user filling out a financial aid or loan application.
                         {loading && activeField === 'employment' ? (
                             <CircularProgress size={20} />
                         ) : (
-                            'Help me to write'
+                            t('Help me to write')
                         )}
                     </Button>
                 </Box>
@@ -171,7 +198,7 @@ You are assisting a user filling out a financial aid or loan application.
                 {/* Section 3 */}
                 <Box>
                     <Typography variant="subtitle1" mb={1}>
-                        Reason for Applying
+                        {t('Reason for Applying')}
                     </Typography>
                     <TextField
                         fullWidth
@@ -189,7 +216,7 @@ You are assisting a user filling out a financial aid or loan application.
                         {loading && activeField === 'reason' ? (
                             <CircularProgress size={20} />
                         ) : (
-                            'Help me to write'
+                            t('Help me to write')
                         )}
                     </Button>
                 </Box>
