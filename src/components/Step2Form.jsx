@@ -1,38 +1,73 @@
-import { useForm, Controller } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import { saveUserData } from '../store/userSlice';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Grid from '@mui/material/Grid';
-import TextField from '@mui/material/TextField';
-import MenuItem from '@mui/material/MenuItem';
-import Typography from '@mui/material/Typography';
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { saveUserData } from "../store/userSlice";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import TextInput from "./inputs/TextInput";
+import SelectInput from "./inputs/SelectInput";
 
-const maritalStatuses = ['Single', 'Married', 'Divorced', 'Widowed'];
-const employmentStatuses = ['Employed', 'Unemployed', 'Self-Employed', 'Student'];
-const housingStatuses = ['Owned', 'Rented', 'Living with Family', 'Other'];
+const maritalStatuses = ["Single", "Married", "Divorced", "Widowed"];
+const employmentStatuses = ["Employed", "Unemployed", "Self-Employed", "Student"];
+const housingStatuses = ["Owned", "Rented", "Living with Family", "Other"];
 
 const fields = [
-    { name: 'maritalStatus', label: 'Marital Status', type: 'select', options: maritalStatuses, required: true },
-    { name: 'dependents', label: 'Dependents', required: true, pattern: /^[0-9]+$/, message: 'Must be a number' },
-    { name: 'employmentStatus', label: 'Employment Status', type: 'select', options: employmentStatuses, required: true },
-    { name: 'monthlyIncome', label: 'Monthly Income', required: true, pattern: /^[0-9]+$/, message: 'Enter a valid amount' },
-    { name: 'housingStatus', label: 'Housing Status', type: 'select', options: housingStatuses, required: true },
+    {
+        name: "maritalStatus",
+        label: "Marital Status",
+        type: "select",
+        options: maritalStatuses,
+        required: true,
+    },
+    {
+        name: "dependents",
+        label: "Dependents",
+        required: true,
+        pattern: /^[0-9]+$/,
+        message: "Must be a number",
+    },
+    {
+        name: "employmentStatus",
+        label: "Employment Status",
+        type: "select",
+        options: employmentStatuses,
+        required: true,
+    },
+    {
+        name: "monthlyIncome",
+        label: "Monthly Income",
+        required: true,
+        pattern: /^[0-9]+$/,
+        message: "Enter a valid amount",
+    },
+    {
+        name: "housingStatus",
+        label: "Housing Status",
+        type: "select",
+        options: housingStatuses,
+        required: true,
+    },
 ];
 
 const Step2Form = () => {
     const dispatch = useDispatch();
     const defaultValues = useSelector((state) => state.user);
 
-    const { handleSubmit, control, reset, formState: { errors } } = useForm({
+    const {
+        handleSubmit,
+        control,
+        reset,
+        formState: { errors },
+    } = useForm({
         defaultValues,
-        mode: 'onTouched',
-        reValidateMode: 'onChange',
+        mode: "onTouched",
+        reValidateMode: "onChange",
     });
 
     const onSubmit = (data) => {
         dispatch(saveUserData(data));
-        console.log('Saved:', data);
+        console.log("Saved:", data);
     };
 
     return (
@@ -40,13 +75,13 @@ const Step2Form = () => {
             component="form"
             onSubmit={handleSubmit(onSubmit)}
             sx={{
-                maxWidth: '100%',
-                mx: 'auto',
+                maxWidth: "100%",
+                mx: "auto",
                 my: 2,
                 p: 3,
-                maxHeight: '60vh',
-                overflowY: 'auto',
-                bgcolor: 'background.paper',
+                maxHeight: "60vh",
+                overflowY: "auto",
+                bgcolor: "background.paper",
                 borderRadius: 2,
                 boxShadow: 1,
             }}
@@ -57,46 +92,33 @@ const Step2Form = () => {
 
             <Grid container spacing={2}>
                 {fields.map((field) => {
-                    const validationRules = {
+                    const rules = {
                         required: field.required ? `${field.label} is required` : false,
                         pattern: field.pattern
                             ? { value: field.pattern, message: field.message }
                             : undefined,
                     };
 
+                    if (field.type === "select") {
+                        return (
+                            <Grid  size={{ xs: 12, md: 5 }} key={field.name}>
+                                <SelectInput
+                                    {...field}
+                                    control={control}
+                                    rules={rules}
+                                    errors={errors}
+                                />
+                            </Grid>
+                        );
+                    }
+
                     return (
-                        <Grid key={field.name} size={8}>
-                            <Controller
-                                name={field.name}
+                        <Grid  size={{ xs: 12, md: 5 }} key={field.name}>
+                            <TextInput
+                                {...field}
                                 control={control}
-                                rules={validationRules}
-                                render={({ field: ctrl }) =>
-                                    field.type === 'select' ? (
-                                        <TextField
-                                            {...ctrl}
-                                            select
-                                            fullWidth
-                                            label={field.label}
-                                            error={!!errors[field.name]}
-                                            helperText={errors[field.name]?.message}
-                                        >
-                                            {field.options.map((option) => (
-                                                <MenuItem key={option} value={option}>
-                                                    {option}
-                                                </MenuItem>
-                                            ))}
-                                        </TextField>
-                                    ) : (
-                                        <TextField
-                                            {...ctrl}
-                                            fullWidth
-                                            label={field.label}
-                                            type={field.type || 'text'}
-                                            error={!!errors[field.name]}
-                                            helperText={errors[field.name]?.message}
-                                        />
-                                    )
-                                }
+                                rules={rules}
+                                errors={errors}
                             />
                         </Grid>
                     );
