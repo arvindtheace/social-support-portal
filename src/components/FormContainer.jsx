@@ -11,6 +11,7 @@ import Step2Form from './Step2Form';
 import Step3Form from './Step3Form';
 import { useDispatch } from 'react-redux';
 import { savePersonalInfo } from "../store/personalInfoSlice";
+import { saveFinancialInfo } from "../store/financialInfoSlice";
 
 
 
@@ -20,11 +21,12 @@ const FormContainer = ({ theme }) => {
     const [isStep1Valid, setIsStep1Valid] = React.useState(false);
     const [step1Data, setStep1Data] = React.useState({});
     const [isStep2Valid, setIsStep2Valid] = React.useState(false);
+    const [step2Data, setStep2Data] = React.useState({});
     const dispatch = useDispatch();
 
     const StepMap = {
         0: <Step1Form onValidityChange={setIsStep1Valid} onDataChange={setStep1Data} />,
-        1: <Step2Form onValidityChange={setIsStep2Valid} />,
+        1: <Step2Form onValidityChange={setIsStep2Valid} onDataChange={setStep2Data} />,
         2: <Step3Form />
     }
 
@@ -34,6 +36,9 @@ const FormContainer = ({ theme }) => {
     const handleNext = () => {
         if(activeStep === 0) {
             dispatch(savePersonalInfo(step1Data));
+        }
+        else if(activeStep === 1) {
+            dispatch(saveFinancialInfo(step2Data));
         }
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };

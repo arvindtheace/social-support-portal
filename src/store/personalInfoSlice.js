@@ -15,7 +15,7 @@ const initialState = {
 };
 
 const personalInfoSlice = createSlice({
-  name: 'user',
+  name: 'personalInfo',
   initialState,
   reducers: {
     savePersonalInfo: (state, action) => {

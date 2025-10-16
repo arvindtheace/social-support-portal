@@ -1,9 +1,7 @@
 import { useEffect } from 'react';
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
-import { savePersonalInfo } from "../store/personalInfoSlice";
+import { useSelector } from "react-redux";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import TextInput from "./inputs/TextInput";
@@ -51,14 +49,13 @@ const fields = [
     },
 ];
 
-const Step2Form = ({ onValidityChange }) => {
-    const dispatch = useDispatch();
-    const defaultValues = useSelector((state) => state.user);
+const Step2Form = ({ onValidityChange, onDataChange }) => {
+    const defaultValues = useSelector((state) => state.financialInfo);
 
     const {
         handleSubmit,
         control,
-        reset,
+        watch,
         formState: { errors, isValid },
     } = useForm({
         defaultValues,
@@ -70,15 +67,17 @@ const Step2Form = ({ onValidityChange }) => {
         if (onValidityChange) onValidityChange(isValid);
     }, [isValid, onValidityChange]);
 
-    const onSubmit = (data) => {
-        dispatch(savePersonalInfo(data));
-        console.log("Saved:", data);
-    };
+    useEffect(() => {
+        if (isValid) {
+            const watchedData = watch();
+            onDataChange(watchedData);
+        }
+    }, [isValid, watch, onDataChange])
 
     return (
         <Box
             component="form"
-            onSubmit={handleSubmit(onSubmit)}
+            onSubmit={handleSubmit(() => { })}
             sx={{
                 maxWidth: "100%",
                 mx: "auto",
@@ -130,18 +129,6 @@ const Step2Form = ({ onValidityChange }) => {
                 })}
             </Grid>
 
-            <Box mt={3} display="flex" gap={2}>
-                <Button type="submit" variant="contained">
-                    Save
-                </Button>
-                <Button
-                    type="button"
-                    variant="outlined"
-                    onClick={() => reset(defaultValues)}
-                >
-                    Reset
-                </Button>
-            </Box>
         </Box>
     );
 };

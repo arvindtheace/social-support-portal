@@ -36,7 +36,7 @@ const fields = [
 ];
 
 const UserForm = ({ onValidityChange, onDataChange }) => {
-    const defaultValues = useSelector((state) => state.user);
+    const defaultValues = useSelector((state) => state.personalInfo);
 
     const {
         handleSubmit,
