@@ -1,19 +1,42 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import CircularProgress from '@mui/material/CircularProgress';
+import { useSelector } from "react-redux";
 
-const Step3Form = () => {
+
+const Step3Form = ({ onValidityChange, onDataChange }) => {
+    const situationInfo = useSelector((state) => state.situationInfo);
     const [form, setForm] = useState({
-        financial: '',
-        employment: '',
-        reason: '',
+        financial: situationInfo.financial || '',
+        employment: situationInfo.employment || '',
+        reason: situationInfo.reason || '',
     });
     const [loading, setLoading] = useState(false);
     const [activeField, setActiveField] = useState('');
+
+    useEffect(() => {
+        const allFieldsFilled = Object.values(form).every(
+            (value) => value.trim() !== ''
+        );
+        if (allFieldsFilled) {
+            onValidityChange(true);
+        } else {
+            onValidityChange(false);
+        }
+    }, [onValidityChange, form]);
+
+    useEffect(() => {
+        const allFieldsFilled = Object.values(form).every(
+            (value) => value.trim() !== ''
+        );
+        if (allFieldsFilled) {
+            onDataChange(form);
+        }
+    }, [onDataChange, form]);
 
     const handleChange = (field, value) => {
         setForm((prev) => ({ ...prev, [field]: value }));
@@ -24,7 +47,7 @@ const Step3Form = () => {
         setActiveField(field);
         const currentText = form[field].trim();
 
-        // 🎯 Define context-specific prompts
+        // Define context-specific prompts
         const promptTemplates = {
             financial: `
 You are assisting a user filling out a financial aid or loan application.
@@ -63,10 +86,10 @@ You are assisting a user filling out a financial aid or loan application.
             });
             const data = await res.json();
 
-            handleChange(field, data.output || "⚠️ No response received.");
+            handleChange(field, data.output || "No response received.");
         } catch (err) {
             console.error(err);
-            handleChange(field, "❌ Error connecting to AI service.");
+            handleChange(field, "Error connecting to AI service.");
         } finally {
             setLoading(false);
         }
@@ -76,7 +99,7 @@ You are assisting a user filling out a financial aid or loan application.
 
     return (
         <Box
-             sx={{
+            sx={{
                 maxWidth: '100%',
                 mx: 'auto',
                 my: 2,

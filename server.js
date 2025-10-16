@@ -19,7 +19,7 @@ app.post("/api/chat", async (req, res) => {
     const { input } = req.body;
 
     const result = await client.responses.create({
-      model: "gpt-4o-mini", // or "gpt-5" if you have access
+      model: "gpt-4o-mini",
       input,
     });
 
@@ -29,6 +29,20 @@ app.post("/api/chat", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+
+// this is a dummy call
+app.post("/api/submit", async(req, res) => {
+  try {
+
+    console.log('input ', req.body)
+
+    res.json({ success: true, message: 'all good!' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.message });
+  }
+})
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`✅ Server running on http://localhost:${PORT}`));
