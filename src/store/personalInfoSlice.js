@@ -1,4 +1,4 @@
-// src/store/userSlice.js
+// src/store/personalInfoSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
@@ -14,16 +14,16 @@ const initialState = {
   email: '',
 };
 
-const userSlice = createSlice({
+const personalInfoSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    saveUserData: (state, action) => {
+    savePersonalInfo: (state, action) => {
       return { ...state, ...action.payload };
     },
     resetUserData: () => initialState,
   },
 });
 
-export const { saveUserData, resetUserData } = userSlice.actions;
-export default userSlice.reducer;
+export const { savePersonalInfo, resetUserData } = personalInfoSlice.actions;
+export default personalInfoSlice.reducer;

@@ -6,23 +6,35 @@ import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useTranslation } from 'react-i18next';
-import Step1Form from './Step1Form'; 
+import Step1Form from './Step1Form';
 import Step2Form from './Step2Form';
 import Step3Form from './Step3Form';
+import { useDispatch } from 'react-redux';
+import { savePersonalInfo } from "../store/personalInfoSlice";
 
-const StepMap = {
-    0: <Step1Form />,
-    1: <Step2Form />,
-    2: <Step3Form />
-}
 
 
 const FormContainer = ({ theme }) => {
     const { t } = useTranslation();
     const [activeStep, setActiveStep] = React.useState(0);
+    const [isStep1Valid, setIsStep1Valid] = React.useState(false);
+    const [step1Data, setStep1Data] = React.useState({});
+    const [isStep2Valid, setIsStep2Valid] = React.useState(false);
+    const dispatch = useDispatch();
+
+    const StepMap = {
+        0: <Step1Form onValidityChange={setIsStep1Valid} onDataChange={setStep1Data} />,
+        1: <Step2Form onValidityChange={setIsStep2Valid} />,
+        2: <Step3Form />
+    }
+
+    console.log('isStep1Valid:', isStep1Valid);
     const steps = [t('step1'), t('step2'), t('step3')];
 
     const handleNext = () => {
+        if(activeStep === 0) {
+            dispatch(savePersonalInfo(step1Data));
+        }
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
 
@@ -33,6 +45,17 @@ const FormContainer = ({ theme }) => {
     const handleReset = () => {
         setActiveStep(0);
     };
+
+    const nextDisabled = () => {
+        console.log('activeStep:', activeStep);
+        if (activeStep === 0) {
+            return !isStep1Valid;
+        }
+        if (activeStep === 1) {
+            return !isStep2Valid;
+        }
+        return false;
+    }
 
     return (
         <Box sx={{ mx: 2 }} dir={theme.direction}>
@@ -72,7 +95,9 @@ const FormContainer = ({ theme }) => {
                             {t('back')}
                         </Button>
                         <Box sx={{ flex: '1 1 auto' }} />
-                        <Button onClick={handleNext}>
+                        <Button 
+                        disabled={nextDisabled()}
+                        onClick={handleNext}>
                             {activeStep === steps.length - 1 ? t('finish') : t('next')}
                         </Button>
                     </Box>

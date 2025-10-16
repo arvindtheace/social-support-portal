@@ -1,8 +1,7 @@
+import { useEffect } from 'react';
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
-import { saveUserData } from "../store/userSlice";
+import { useSelector } from "react-redux";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import TextInput from "./inputs/TextInput";
@@ -36,29 +35,35 @@ const fields = [
     },
 ];
 
-const UserForm = () => {
-    const dispatch = useDispatch();
+const UserForm = ({ onValidityChange, onDataChange }) => {
     const defaultValues = useSelector((state) => state.user);
 
     const {
         handleSubmit,
         control,
-        reset,
-        formState: { errors },
+        watch,
+        formState: { errors, isValid },
     } = useForm({
         defaultValues,
         mode: "onTouched",
     });
 
-    const onSubmit = (data) => {
-        dispatch(saveUserData(data));
-        console.log("Saved:", data);
-    };
+    useEffect(() => {
+        if (onValidityChange) onValidityChange(isValid);
+    }, [isValid, onValidityChange]);
+
+    useEffect(() => {
+        if (isValid) {
+            const watchedData = watch();
+            onDataChange(watchedData);
+        }
+    }, [isValid, watch, onDataChange])
+
 
     return (
         <Box
             component="form"
-            onSubmit={handleSubmit(onSubmit)}
+            onSubmit={handleSubmit(() => {})}
             sx={{
                 maxWidth: "100%",
                 mx: "auto",
@@ -72,7 +77,7 @@ const UserForm = () => {
             }}
         >
             <Typography variant="h5" mb={2}>
-                User Information
+                Personal Information
             </Typography>
 
             <Grid container spacing={2}>
@@ -86,7 +91,7 @@ const UserForm = () => {
 
                     if (field.type === "select")
                         return (
-                            <Grid  size={{ xs: 12, md: 5 }} key={field.name}>
+                            <Grid size={{ xs: 12, md: 5 }} key={field.name}>
                                 <SelectInput
                                     {...field}
                                     control={control}
@@ -99,7 +104,7 @@ const UserForm = () => {
 
                     if (field.type === "date")
                         return (
-                            <Grid  size={{ xs: 12, md: 5 }} key={field.name}>
+                            <Grid size={{ xs: 12, md: 5 }} key={field.name}>
                                 <DateInput
                                     {...field}
                                     control={control}
@@ -110,7 +115,7 @@ const UserForm = () => {
                         );
 
                     return (
-                        <Grid  size={{ xs: 12, md: 5 }} key={field.name}>
+                        <Grid size={{ xs: 12, md: 5 }} key={field.name}>
                             <TextInput
                                 {...field}
                                 control={control}
@@ -121,15 +126,6 @@ const UserForm = () => {
                     );
                 })}
             </Grid>
-
-            <Box mt={3} display="flex" gap={2}>
-                <Button type="submit" variant="contained">
-                    Save
-                </Button>
-                <Button type="button" variant="outlined" onClick={() => reset(defaultValues)}>
-                    Reset
-                </Button>
-            </Box>
         </Box>
     );
 };

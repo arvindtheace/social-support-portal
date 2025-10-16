@@ -1,6 +1,7 @@
+import { useEffect } from 'react';
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { saveUserData } from "../store/userSlice";
+import { savePersonalInfo } from "../store/personalInfoSlice";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
@@ -50,7 +51,7 @@ const fields = [
     },
 ];
 
-const Step2Form = () => {
+const Step2Form = ({ onValidityChange }) => {
     const dispatch = useDispatch();
     const defaultValues = useSelector((state) => state.user);
 
@@ -58,15 +59,19 @@ const Step2Form = () => {
         handleSubmit,
         control,
         reset,
-        formState: { errors },
+        formState: { errors, isValid },
     } = useForm({
         defaultValues,
         mode: "onTouched",
         reValidateMode: "onChange",
     });
 
+    useEffect(() => {
+        if (onValidityChange) onValidityChange(isValid);
+    }, [isValid, onValidityChange]);
+
     const onSubmit = (data) => {
-        dispatch(saveUserData(data));
+        dispatch(savePersonalInfo(data));
         console.log("Saved:", data);
     };
 
@@ -101,7 +106,7 @@ const Step2Form = () => {
 
                     if (field.type === "select") {
                         return (
-                            <Grid  size={{ xs: 12, md: 5 }} key={field.name}>
+                            <Grid size={{ xs: 12, md: 5 }} key={field.name}>
                                 <SelectInput
                                     {...field}
                                     control={control}
@@ -113,7 +118,7 @@ const Step2Form = () => {
                     }
 
                     return (
-                        <Grid  size={{ xs: 12, md: 5 }} key={field.name}>
+                        <Grid size={{ xs: 12, md: 5 }} key={field.name}>
                             <TextInput
                                 {...field}
                                 control={control}
