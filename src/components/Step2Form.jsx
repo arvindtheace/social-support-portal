@@ -6,6 +6,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import TextInput from "./inputs/TextInput";
 import SelectInput from "./inputs/SelectInput";
+import { useTranslation } from 'react-i18next';
 
 const maritalStatuses = ["Single", "Married", "Divorced", "Widowed"];
 const employmentStatuses = ["Employed", "Unemployed", "Self-Employed", "Student"];
@@ -50,6 +51,7 @@ const fields = [
 ];
 
 const Step2Form = ({ onValidityChange, onDataChange }) => {
+    const { t } = useTranslation();
     const defaultValues = useSelector((state) => state.financialInfo);
 
     const {
@@ -97,9 +99,9 @@ const Step2Form = ({ onValidityChange, onDataChange }) => {
             <Grid container spacing={2}>
                 {fields.map((field) => {
                     const rules = {
-                        required: field.required ? `${field.label} is required` : false,
+                        required: field.required ? `${t(field.label)} ${t('is required')}` : false,
                         pattern: field.pattern
-                            ? { value: field.pattern, message: field.message }
+                            ? { value: field.pattern, message: t(field.message) }
                             : undefined,
                     };
 
@@ -108,6 +110,8 @@ const Step2Form = ({ onValidityChange, onDataChange }) => {
                             <Grid size={{ xs: 12, md: 5 }} key={field.name}>
                                 <SelectInput
                                     {...field}
+                                    label={t(field.label)}
+                                    options={field.options.map((value) => t(value))}
                                     control={control}
                                     rules={rules}
                                     errors={errors}
@@ -120,6 +124,7 @@ const Step2Form = ({ onValidityChange, onDataChange }) => {
                         <Grid size={{ xs: 12, md: 5 }} key={field.name}>
                             <TextInput
                                 {...field}
+                                label={t(field.label)}
                                 control={control}
                                 rules={rules}
                                 errors={errors}

@@ -19,13 +19,6 @@ i18n
         resources: {
             en: {
                 translation: {
-                    description: {
-                        part1: 'Edit <1>src/App.js</1> and save to reload.',
-                        part2: 'Learn React'
-                    },
-                    outlined: 'Outlined',
-                    counter_one: 'Changed language just once',
-                    counter_other: 'Changed language already {{count}} times',
                     step1: 'Personal Information',
                     step2: 'Family & Financial Info',
                     step3: 'Situation Descriptions',
@@ -37,24 +30,49 @@ i18n
             },
             ar: {
                 translation: {
-                    description: {
-                        part1: 'src/App.jsوحفظه لإعادة التحميل.',
-                        part2: 'تعلم React'
-                    },
-                    outlined: 'مطلق',
-                    counter_zero: 'لم يتم تغيير اللغة بعد',
-                    counter_one: 'تم تغيير اللغة مرة واحدة فقط',
-                    counter_two: 'تم تغيير اللغة مرتين',
-                    counter_few: 'تم تغيير اللغة {{count}} مرات',
-                    counter_many: 'تم تغيير اللغة {{count}} مرة',
-                    counter_other: 'تم تغيير اللغة {{count}} مرات',
                     step1: 'معلومات شخصية',
                     step2: 'المعلومات العائلية والمالية',
                     step3: 'وصف الموقف',
                     next: "التالي",
                     back: "السابق",
                     skip: "تخطي",
-                    finish: "إنهاء"
+                    finish: "إنهاء",
+                    "Personal Information": "معلومات شخصية",
+                    Name: "اسم",
+                    "National ID": "الهوية الوطنية",
+                    "Date of Birth": "تاريخ الميلاد",
+                    "Gender": "جنس",
+                    "Address": "عنوان",
+                    "City": "مدينة",
+                    "State": "ولاية",
+                    "Country": "دولة",
+                    "Phone": "هاتف",
+                    "Email": "بريد إلكتروني",
+                    "is required": "مطلوب",
+                    "Male": "ذكر",
+                    "Female": "أنثى",
+                    "Other": "آحرون",
+                    "Phone must be 10 digits": "يجب أن يكون الهاتف مكونًا من 10 أرقام",
+                    "Enter a valid email": "أدخل بريدًا إلكترونيًا صالحًا",
+                    "Marital Status": "الحالة الاجتماعية",
+                    "Single": "أعزب",
+                    "Married": "متزوج",
+                    "Divorced": "مُطلّق",
+                    "Widowed": "أرمل",
+                    "Dependents": "المعالين",
+                    "Employment Status": "الحالة الوظيفية",
+                    "Employed": "موظف",
+                    "Unemployed": "غير موظف",
+                    "Self-Employed": "العاملون لحسابهم الخاص",
+                    "Student": "طالب",
+                    "Monthly Income": "الدخل الشهري",
+                    "Housing Status": "حالة السكن",
+                    "Owned": "مملوكة",
+                    "Rented": "مستأجرة",
+                    "Living with Family": "العيش مع العائلة",
+                    "Other": "آخر",
+                    "Enter a valid amount": "أدخل مبلغًا صالحًا",
+                    "Must be a number": "يجب أن يكون رقم",
                 }
             }
 

@@ -7,8 +7,8 @@ import Typography from "@mui/material/Typography";
 import TextInput from "./inputs/TextInput";
 import SelectInput from "./inputs/SelectInput";
 import DateInput from "./inputs/DateInput";
+import { useTranslation } from 'react-i18next';
 
-const genders = ["Male", "Female", "Other"];
 
 const fields = [
     { name: "name", label: "Name", required: true },
@@ -37,7 +37,8 @@ const fields = [
 
 const UserForm = ({ onValidityChange, onDataChange }) => {
     const defaultValues = useSelector((state) => state.personalInfo);
-
+    const { t } = useTranslation();
+    const genders = [t("Male"), t("Female"), t("Other")];
     const {
         handleSubmit,
         control,
@@ -77,15 +78,15 @@ const UserForm = ({ onValidityChange, onDataChange }) => {
             }}
         >
             <Typography variant="h5" mb={2}>
-                Personal Information
+                {t("Personal Information")}
             </Typography>
 
             <Grid container spacing={2}>
                 {fields.map((field) => {
                     const rules = {
-                        required: field.required ? `${field.label} is required` : false,
+                        required: field.required ? `${t(field.label)} ${t('is required')}` : false,
                         pattern: field.pattern
-                            ? { value: field.pattern, message: field.message }
+                            ? { value: field.pattern, message: t(field.message) }
                             : undefined,
                     };
 
@@ -94,6 +95,7 @@ const UserForm = ({ onValidityChange, onDataChange }) => {
                             <Grid size={{ xs: 12, md: 5 }} key={field.name}>
                                 <SelectInput
                                     {...field}
+                                    label={t(field.label)}
                                     control={control}
                                     rules={rules}
                                     errors={errors}
@@ -107,6 +109,7 @@ const UserForm = ({ onValidityChange, onDataChange }) => {
                             <Grid size={{ xs: 12, md: 5 }} key={field.name}>
                                 <DateInput
                                     {...field}
+                                    label={t(field.label)}
                                     control={control}
                                     rules={rules}
                                     errors={errors}
@@ -118,6 +121,7 @@ const UserForm = ({ onValidityChange, onDataChange }) => {
                         <Grid size={{ xs: 12, md: 5 }} key={field.name}>
                             <TextInput
                                 {...field}
+                                label={t(field.label)}
                                 control={control}
                                 rules={rules}
                                 errors={errors}
