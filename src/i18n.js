@@ -1,15 +1,8 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-// import LanguageDetector from 'i18next-browser-languagedetector';
 
 i18n
-    // detect user language
-    //   // learn more: https://github.com/i18next/i18next-browser-languageDetector
-    //   .use(LanguageDetector)
-    // pass the i18n instance to react-i18next.
     .use(initReactI18next)
-    // init i18next
-    // for all options read: https://www.i18next.com/overview/configuration-options
     .init({
         debug: true,
         fallbackLng: 'en',
@@ -66,7 +59,9 @@ i18n
                     "Current Financial Situation": "Current Financial Situation",
                     "Help me to write": "Help me to write",
                     "Employment Circumstances": "Employment Circumstances",
-                    "Reason for Applying": "Reason for Applying"
+                    "Reason for Applying": "Reason for Applying",
+                    "Govt. Social Support Application": "Govt. Social Support Application",
+                    "All steps completed - you are finished": "All steps completed - you are finished",
                 }
             },
             ar: {
@@ -119,7 +114,9 @@ i18n
                     "Current Financial Situation": "الوضع المالي الحالي",
                     "Help me to write": "ساعدني في الكتابة",
                     "Employment Circumstances": "ظروف العمل",
-                    "Reason for Applying": "سبب التقديم"
+                    "Reason for Applying": "سبب التقديم",
+                    "Govt. Social Support Application": "طلب دعم اجتماعي حكومي",
+                    "All steps completed - you are finished": "تم إكمال جميع الخطوات - لقد انتهيت",
 
                 }
             }

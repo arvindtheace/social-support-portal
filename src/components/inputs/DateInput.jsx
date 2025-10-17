@@ -14,6 +14,7 @@ const DateInput = ({ name, control, label, rules, errors }) => (
       render={({ field }) => (
         <DatePicker
           label={label}
+          disableFuture
           value={field.value ? dayjs(field.value) : null}
           onChange={(date) => field.onChange(date ? date.toISOString() : "")}
           renderInput={(params) => (
